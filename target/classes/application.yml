@@ -1,0 +1,104 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /ssm
+#    compression:
+#      enabled: true
+#      mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/css,image/*
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: metrics,httptrace
+logging:
+  config: classpath:log4j2-config.xml
+
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mail:
+    host: smtp.163.com
+    username: jeecgos@163.com
+    password: ??
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  ## quartz定时任务,采用数据库方式
+#  quartz:
+#    job-store-type: jdbc
+  #json 时间戳统一转换
+  jackson:
+    date-format:   yyyy-MM-dd HH:mm:ss
+    time-zone:   GMT+8
+  aop:
+    proxy-target-class: true
+  # 设置静态文件路径，js,css等
+#  mvc:
+#    static-path-pattern: /**
+#  resource:
+#    static-locations: classpath:/static/,classpath:/public/
+#  autoconfigure:
+#    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    url: jdbc:mysql://localhost:3306/jeecg-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false&GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    platform: mysql
+
+      # 多数据源配置
+      #multi-datasource1:
+      #url: jdbc:mysql://localhost:3306/jeecg-boot2?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+      #username: root
+      #password: root
+      #driver-class-name: com.mysql.jdbc.Driver
+
+
+
+mybatis-plus:
+
+  mapper-locations: classpath:mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.*.*.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 4
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull
+    jdbc-type-for-null: 'null'
+    call-setters-on-nulls: true
+
+
+
+
+  #redis 配置
+#  redis:
+#    database: 0
+#    host: 192.168.100.52
+#    lettuce:
+#      pool:
+#        max-active: 8   #最大连接数据库连接数,设 0 为没有限制
+#        max-idle: 8     #最大等待连接中的数量,设 0 为没有限制
+#        max-wait: -1ms  #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+#        min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
+#      shutdown-timeout: 100ms
+#    password: ''
+#    port: 6379
